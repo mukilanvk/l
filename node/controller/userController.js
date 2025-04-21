@@ -24,8 +24,8 @@ async register(req,res){
       }
       async login(req, res) {
         try {
-          const { fristName, password } = req.body;
-          const user = await userModal.findOne({ fristName });
+          const { userName, password } = req.body;
+          const user = await userModal.findOne({ userName });
           if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(400).send({ message: 'Invalid credentials' });
           }

@@ -5,6 +5,7 @@ import *  as dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoute from './route/user.js';
+import orderRoute from './route/order.js';
 
 dotenv.config();
 
@@ -22,4 +23,5 @@ app.use(cookieParser());
 
 app.use("/product", productRoute);
 app.use("/user" , authRoute);
+app.use("/order" , orderRoute);
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
