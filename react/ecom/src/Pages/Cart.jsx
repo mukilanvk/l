@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateQuantity ,clearCart } from '../redux/store';
+import { updateQuantity, clearCart } from '../redux/store';
 import {
   Grid,
   Typography,
@@ -8,15 +8,15 @@ import {
   Button,
   Paper,
   Divider,
+  Box,
 } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
-
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  const filteredCart = cart.filter(item => item.quantity > 0);
+  const filteredCart = cart.filter((item) => item.quantity > 0);
 
   const handleChange = (id, quantity) => {
     const validQty = Math.max(0, parseInt(quantity));
@@ -31,70 +31,101 @@ const Cart = () => {
   };
 
   return (
-    <Grid container className="cart-items" spacing={3} padding={3}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      padding={3}
+    >
       {filteredCart.length > 0 ? (
         filteredCart.map((item) => (
-          <Grid item xs={12} key={item.id}>
-            <Paper className="cart-item" elevation={3}>
-              <div className="cart-content">
-                <div className="item-info">
-                  <Typography variant="h6" className="item-name">
-                    <b>{item.product_name}</b>
+          <Box key={item.id} sx={{ width: '100%', maxWidth: 900, mb: 2 }}>
+            <Paper elevation={3} sx={{ padding: 2 , borderRadius:'20px' }}>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                flexWrap="wrap"
+              >
+                <Box sx={{ flex: '1 1 auto' }}>
+                  <Typography variant="h6" fontWeight="bold">
+                    {item.product_name}
                   </Typography>
-                  <Typography variant="body2" className="item-price">
-                    Price: ₹{item.price}
-                  </Typography>
-                  <Typography variant="body2" className="item-subtotal">
+                  <Typography variant="body2">Price: ₹{item.price}</Typography>
+                  <Typography variant="body2">
                     Subtotal: ₹{(item.quantity * item.price).toFixed(2)}
                   </Typography>
-                </div>
+                </Box>
 
-                {/* Quantity Controls */}
-                <div className="quantity-controls">
+                <Box display="flex" alignItems="center" sx={{ mt: { xs: 2, sm: 0 } }}>
                   <IconButton
+                    aria-label="Decrease quantity"
                     onClick={() => handleChange(item.id, item.quantity - 1)}
                     color="primary"
-                    disabled={item.quantity <= 1}
+                    disabled={item.quantity <= 0}
                   >
                     <Remove />
                   </IconButton>
-                  <Typography className="quantity-text">{item.quantity}</Typography>
+                  <Typography sx={{ mx: 1 }}>{item.quantity}</Typography>
                   <IconButton
+                    aria-label="Increase quantity"
                     onClick={() => handleChange(item.id, item.quantity + 1)}
                     color="primary"
                   >
                     <Add />
                   </IconButton>
-                </div>
-              </div>
+                </Box>
+              </Box>
             </Paper>
-          </Grid>
+          </Box>
         ))
       ) : (
-        <Grid item xs={12}>
-          <Typography variant="h6" align="center">
-            Your cart is empty.
-          </Typography>
-        </Grid>
+        <Typography variant="h6" align="center">
+          Your cart is empty.
+        </Typography>
       )}
 
       {filteredCart.length > 0 && (
-        <>
-          <Grid item xs={12}>
-            <Divider />
-            <Paper className="cart-total" elevation={3}>
-              <Typography variant="h7"><b>Total: ₹{total.toFixed(2)}</b></Typography>
-            </Paper>
-          </Grid>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          sx={{ width: '100%', maxWidth: 500, mt: 4 }}
+        >
+          <Divider sx={{ width: '100%', mb: 2 }} />
 
-          <Grid item xs={12} className="submit-button-container">
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
-              Confirm Order
-            </Button>
-          </Grid>
-        </>
+          <Paper elevation={3} sx={{ padding: 2, width: '100%', mb: 4 }}>
+            <Typography variant="h6" align="center">
+              <b>Total: ₹ {total.toFixed(2)}</b>
+            </Typography>
+          </Paper>
+
+          <Button
+            variant="contained"
+            fullWidth
+            onClick={handleSubmit} 
+             sx={{
+              backgroundColor: 'green',        
+              color: '#fff',
+              paddingY: 1.5,
+              fontWeight: 'bold',
+              fontSize: '1rem',
+              borderRadius: '8px',
+              textTransform: 'none',
+              boxShadow: '0px 3px 6px rgba(0,0,0,0.2)',
+              transition: 'all 0.3s ease-in-out',
+              '&:hover': {
+                backgroundColor: 'blue',
+                transform: 'scale(1.02)',
+                boxShadow: '0px 5px 12px rgba(0,0,0,0.25)',
+              },
+            }}
+          >
+            Confirm Order
+          </Button>
+        </Box>
       )}
-    </Grid>
+    </Box>
   );
 };
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Box, Badge } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const navLinkStyle = {
   color: 'white',
@@ -15,6 +16,8 @@ const navLinkStyle = {
 };
 
 const Navbar = () => {
+  const cart = useSelector(state =>state.cart);
+  const totalItems = cart.reduce((acc,item)=> acc+item.quantity,0)
   return (
     <AppBar
       position="static"
@@ -50,7 +53,6 @@ const Navbar = () => {
           <Typography component={Link} to="/contact" sx={navLinkStyle}>
             Contact
           </Typography>
-
           <IconButton
             component={Link}
             to="/cart"
@@ -58,11 +60,13 @@ const Navbar = () => {
               color: 'white',
               transition: 'color 0.3s ease',
               '&:hover': {
-                color: '#1e90ff',
+                color: 'black',
               },
             }}
           >
+            <Badge badgeContent={totalItems} color="secondary">
             <ShoppingCart />
+            </Badge>
           </IconButton>
         </Box>
       </Toolbar>

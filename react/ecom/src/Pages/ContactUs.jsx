@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import {
-  TextField,
   Button,
   Alert,
   Grid,
   CircularProgress,
   Typography,
   Paper,
+  TextField,
+  Box,
 } from '@mui/material';
 import axios from 'axios';
 
-
 const ContactUs = () => {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -21,10 +21,10 @@ const ContactUs = () => {
     if (form.name && form.email && form.message) {
       setLoading(true);
       try {
-        await axios.post('http://localhost:3001/contacts', form);
+        await axios.post('http://localhost:3000/contacts', form);
         setSuccess(true);
         setError(false);
-        setForm({ name: '', email: '', message: '' ,subject:'',phone:''});
+        setForm({ name: '', email: '', phone: '', subject: '', message: '' });
       } catch (err) {
         setSuccess(false);
         setError(true);
@@ -37,54 +37,63 @@ const ContactUs = () => {
   const isFormValid = form.name && form.email && form.message;
 
   return (
-    <div className="contact-container">
-      <Paper elevation={4} className="contact-form">
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection:"column",
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '60vh',
+        backgroundColor: '#f5f5f5',
+        px: 2,
+        py: 5,
+      }}
+    >
+      <Paper elevation={1} sx={{ p: 3, maxWidth: 500, width: '100%', borderRadius: 2 ,flexDirection:"column", }}>
         <Typography variant="h5" gutterBottom>
           Contact Us
         </Typography>
 
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ p: 3, maxWidth: 600, width: '100%', borderRadius: 2 ,flexDirection:"column", }}>
           <Grid item xs={12}>
-          <TextField
-    label="Name"
-    fullWidth
-    variant="outlined"
-    margin="normal" 
-    value={form.name}
-    onChange={(e) => setForm({ ...form, name: e.target.value })}
-  />
+            <TextField
+              fullWidth
+              label="Name"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+            />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Email"
               fullWidth
               type="email"
+              label="Email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="phone"
               fullWidth
+              label="Phone"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="subject"
               fullWidth
+              label="Subject"
               value={form.subject}
               onChange={(e) => setForm({ ...form, subject: e.target.value })}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
+              fullWidth
               label="Message"
               multiline
-              rows={3}
-              fullWidth
+              rows={4}
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
             />
@@ -113,7 +122,7 @@ const ContactUs = () => {
           )}
         </Grid>
       </Paper>
-    </div>
+    </Box>
   );
 };
 

@@ -13,7 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const About = () => {
   return (
-    <Box sx={{ padding: 4, maxWidth: 800, margin: '0 auto' }}>
+    <Box sx={{ padding: 4, maxWidth: 900, margin: '0 auto' }}>
       <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
         Welcome to TechWave
       </Typography>
