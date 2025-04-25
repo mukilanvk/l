@@ -22,7 +22,7 @@ const Navbar = () => {
     <AppBar
       position="static"
       sx={{
-        background: 'linear-gradient(135deg,rgb(251, 24, 138),rgb(33, 166, 218))',
+        background: 'linear-gradient(135deg,rgb(19, 18, 19),rgb(167, 169, 170))',
         boxShadow: 'none',
       }}
     >

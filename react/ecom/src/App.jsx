@@ -5,6 +5,7 @@ import Shop from './Pages/Shop';
 import About from './Pages/AboutUs';
 import ContactUs from './Pages/ContactUs';
 import Cart from './Pages/Cart';
+import './index.css'
 
 function App() {
     return(
